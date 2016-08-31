@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "budo index.js --open --live -- -t babelify"
+  },
+  "dependencies": {
+    "babelify": "^7.3.0",
+    "budo": "^8.3.0"
+  }
+}
