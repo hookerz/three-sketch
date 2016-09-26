@@ -1,15 +1,16 @@
 {
   "name": "three-sketch",
   "version": "0.0.2",
+  "license": "MIT",
   "description": "a batteries-included three.js starter pack",
+  "repository": "hookerz/three-sketch",
+  "author": "Chris Parker <parker@byhook.com>",
   "main": "out/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
     "build": "babel src --out-dir out",
     "prepublish": "npm run build"
   },
-  "author": "Chris Parker <parker@byhook.com>",
-  "license": "MIT",
   "dependencies": {
     "component-emitter": "^1.2.1",
     "three": "^0.81.2"
