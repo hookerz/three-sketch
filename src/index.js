@@ -173,3 +173,5 @@ export function Sketch() {
   return sketch;
   
 }
+
+export default Sketch;
