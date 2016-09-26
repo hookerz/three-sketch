@@ -1,5 +1,29 @@
 # three-sketch
 
+## Events and Overwriting Event Handlers
+
+The sketch emits `update`, `resize`, and `mousemove` events at the times you
+would expect. Most of the time, the default render/resize/mousemove event
+handlers will do everything you need. If you need to do something in addition,
+you can use the events to create side effects. If you need to do something
+completely different, you can overwrite some of the key handlers:
+
+```javascript
+
+sketch.on('update', delta => {
+  
+  camera.rotation.y = sketch.time * 0.0001 % 360;
+  
+});
+
+sketch.render = function (delta) {
+  
+  // The default render loop doesn't render to a texture. But now it will!
+  sketch.renderer.render(sketch.scene, sketch.camera, someRenderTarget);
+  
+}
+```
+
 ## Example
 
 ```javascript

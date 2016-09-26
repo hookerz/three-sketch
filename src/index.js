@@ -75,13 +75,19 @@ export function Sketch() {
 
   /**
    * Start running the sketch.
+   * 
+   * @param {Function} [requestAnimationFrame] - A function to request the next
+   *   animation frame. `window.requestAnimationFrame` is used by default, but
+   *   you might want to use a different function (like when using WebVR).
    */
-  sketch.start = function() {
+  sketch.start = function(requestAnimationFrame = window.requestAnimationFrame) {
 
-    window.addEventListener('resize', onResize);
-    window.addEventListener('mousemove', onMousemove);
+    if (running) throw new Error("The sketch is already running.");
 
     running = true;
+    
+    window.addEventListener('resize', onResize);
+    window.addEventListener('mousemove', onMousemove);
 
     // Resize the renderer/camera before emitting the start event, so that any
     // initialization is done at the correct resolution.
@@ -89,9 +95,25 @@ export function Sketch() {
 
     sketch.emit('start', sketch);
 
-    // Start the render loop.
-    render();
+    const loop = function (currentTime) {
 
+      if (!running) return;
+
+      // Update the delta and current time.
+      const deltaTime = time - currentTime;
+      time = currentTime;
+  
+      // Emit an update event for any side effects, then render the scene.
+      sketch.emit('update', deltaTime, sketch);
+      sketch.render(deltaTime);
+      
+      requestAnimationFrame(loop);
+
+    };
+
+    // Start the render loop.
+    requestAnimationFrame(loop);
+    
   };
 
   /**
@@ -103,19 +125,7 @@ export function Sketch() {
 
   };
 
-  const render = function (currentTime) {
-
-    if (!running) return;
-
-    // Derive the time passed since the last frame.
-    const previousTime = time;
-    const deltaTime = previousTime - currentTime;
-
-    // Update the world time.
-    time = currentTime;
-
-    // Update the scene.
-    sketch.emit('update', deltaTime, sketch);
+  sketch.render = function () {
 
     if (!scene.camera || !scene.camera.isCamera) {
       
@@ -128,8 +138,6 @@ export function Sketch() {
 
     }
     
-    requestAnimationFrame(render);
-
   };
 
   const onResize = function () {
