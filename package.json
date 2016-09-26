@@ -1,7 +1,7 @@
 {
   "name": "three-sketch",
   "version": "0.0.2",
-  "description": "",
+  "description": "a batteries-included three.js starter pack",
   "main": "out/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
