@@ -5,8 +5,8 @@
   "description": "a batteries-included three.js starter pack",
   "repository": "hookerz/three-sketch",
   "author": "Chris Parker <parker@byhook.com>",
-  "main": "out/index.js",
-  "jsnext:main": "src/index.js",
+  "main": "out/three-sketch.js",
+  "jsnext:main": "src/three-sketch.js",
   "scripts": {
     "build": "rm -rf out && rollup --config",
     "prepublish": "npm run build"
