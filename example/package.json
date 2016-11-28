@@ -1,9 +1,11 @@
 {
   "scripts": {
-    "start": "budo index.js --open --live -- -t babelify"
+    "clean": "rm -rf out",
+    "build": "rollup --config && cp src/index.html out/index.html",
+    "serve": "http-server out"
   },
   "dependencies": {
-    "babelify": "^7.3.0",
-    "budo": "^8.3.0"
+    "http-server": "^0.9.0",
+    "rollup": "^0.36.4"
   }
 }
