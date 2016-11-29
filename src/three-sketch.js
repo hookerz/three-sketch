@@ -103,7 +103,7 @@ export function Sketch() {
       if (!running) return;
 
       // Update the delta and current time.
-      const deltaTime = time - currentTime;
+      const deltaTime = currentTime - time;
       time = currentTime;
 
       // Emit an update event for any side effects, then render the scene.
