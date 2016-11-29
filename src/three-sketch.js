@@ -124,6 +124,9 @@ export function Sketch() {
    */
   sketch.stop = function () {
 
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('mousemove', onMousemove);
+
     running = false;
 
   };
