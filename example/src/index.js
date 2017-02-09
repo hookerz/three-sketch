@@ -7,35 +7,44 @@ window.onload = function () {
 
   document.body.appendChild(sketch.canvas);
 
-  const geo = new BoxBufferGeometry(1, 1, 1);
-  const mat = new MeshBasicMaterial({ color: 0xff0000 });
-  const box = new Mesh(geo, mat);
-
-  sketch.scene.add(box);
-
   sketch.camera.fov = 60;
   sketch.camera.position.z = 5;
   sketch.camera.updateProjectionMatrix();
 
-  sketch.on('update', delta => {
+  const geo = new BoxBufferGeometry(1, 1, 1);
+  const mat = new MeshBasicMaterial({ color: 0xff0000 });
+  const box = new Mesh(geo, mat);
+  sketch.scene.add(box);
 
-    box.rotation.x = sketch.time * 0.0001 % 360;
-    box.rotation.y = sketch.time * 0.0002 % 360;
+  sketch.addEventListener('update', (event) => {
+
+    box.rotation.x = (event.time * 0.1) % 360;
+    box.rotation.y = (event.time * 0.2) % 360;
+    box.rotation.z = (event.time * 0.3) % 360;
 
   });
 
-  sketch.on('resize', size => {
+  sketch.addEventListener('resize', (event) => {
 
-    // three-sketch takes care of everything
+    const { width, height } = event;
+
+    // three-sketch automatically adjusts the renderer size
+
+    console.log('size', width, height);
 
   });
 
-  sketch.on('mousemove', mouse => {
+  sketch.addEventListener('mousemove', (event) => {
 
-    // mouse coorodinates are in range [-1, 1]
-    sketch.camera.position.x = mouse.x;
-    sketch.camera.position.y = mouse.y;
+    const { mouse } = event;
+
+    // mouse coordinates are in range [-1, 1] relative to the window
+
+    sketch.camera.position.x = -mouse.x;
+    sketch.camera.position.y = -mouse.y;
     sketch.camera.lookAt(box.position);
+
+    console.log('mouse', mouse.x, mouse.y);
 
   });
 
